@@ -1,0 +1,14 @@
+osmnx
+matplotlib
+tqdm
+requests
+overpy
+shapely
+folium
+flask
+flask-cors
+openai
+openpyxl
+numpy
+scipy
+scikit-learn

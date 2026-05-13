@@ -1,0 +1,57 @@
+
+# healthcare/hospitals.py
+
+import json
+import os
+import random
+
+# For the server, BASE_DIR should resolve to the server root
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HOSPITALS_FILE = os.path.join(BASE_DIR, "data", "hospitals.json")
+
+SPECIALTY_MENU = {
+    "1": {"name": "Internal Medicine (طب الأمراض الباطنية)", "osmids": [763524913, 2273311695, 10829490456]},
+    "2": {"name": "Pediatrics (طب الأطفال)", "osmids": [288638163, 288638091]},
+    "3": {"name": "Obstetrics and Gynecology (طب التوليد والنساء والولادة)", "osmids": [2659926093]},
+    "4": {"name": "Surgery (General and Specialized) (الجراحة العامة والمتخصصة)", "osmids": [288090821, 6348477781]},
+    "5": {"name": "Emergency Medicine (طب الطوارئ)", "osmids": [2273311684, 5301750508]},
+    "6": {"name": "Radiology (علم الأشعة)", "osmids": [4584272684]},
+    "7": {"name": "Anesthesiology (علم التخدير)", "osmids": [288364711, 5301750508]},
+    "8": {"name": "Orthopedics (طب العظام)", "osmids": [6348477781, 389158459]},
+    "9": {"name": "Dermatology (طب الجلدية)", "osmids": [392958518]},
+    "10": {"name": "Ophthalmology (طب العيون)", "osmids": [288638091, 10829490456]},
+    "11": {"name": "Neurology (طب الأعصاب)", "osmids": [389158577]},
+    "12": {"name": "Psychiatry (الطب النفسي)", "osmids": [318467453]},
+    "13": {"name": "Oncology (طب الأورام)/cancer", "osmids": [2273311695, 2273311684, 288090821]},
+    "14": {"name": "Physical Therapy (العلاج الطبيعي)", "osmids": [5301750508]},
+    "15": {"name": "Laboratory Services (خدمات المختبرات)", "osmids": [763524913]},
+    "16": {"name": "Nutrition and Dietetics (التغذية والحمية الغذائية)", "osmids": [288638163, 389158459, 418189851]},
+    "17": {"name": "Orthopédie ORL", "osmids": [2659926093, 288364711]},
+    "18": {"name": "Microbiology (علم الأحياء الدقيقة)", "osmids": [10829490456]},
+    "19": {"name": "Maxillofacial Surgery (جراحة الفكين والوجه)", "osmids": [2273311684, 389158577, 392958518]},
+    "20": {"name": "Forensic Medicine (الطب الشرعي)", "osmids": [288638091, 6348477781, 318467453]},
+    "21": {"name": "General Medical Consultations (استشارات طبية عامة)", "osmids": [4584272684]},
+    "22": {"name": "Postoperative Care (رعاية بعد العمليات الجراحية)", "osmids": [418189851]},
+    "23": {"name": "Dentistry (طب اسنان)", "osmids": [288090821, 763524913, 2659926093, 288638163]},
+    "24": {"name": "Diabétologie (طب السكري)", "osmids": [2273311684]},
+    "25": {"name": "Epidemiology (الوبائيات)", "osmids": [6348477781]},
+    "26": {"name": "Biochemistry (الكيمياء الحيوية)", "osmids": [2273311695, 4584272684]},
+    "27": {"name": "Gastroenterology (أمراض الجهاز الهضمي)", "osmids": [392958518, 10829490456]},
+    "28": {"name": "Infectious Diseases (الأمراض المعدية)", "osmids": [5301750508, 2273311695]},
+    "29": {"name": "Cardiology (طب القلب)", "osmids": [2273311684, 763524913, 288364711]},
+    "30": {"name": "Urology (طب المسالك البولية)", "osmids": [288090821]},
+    "31": {"name": "Pulmonology (طب الصدر)", "osmids": [389158459, 389158577, 392958518]}
+}
+
+def load_hospitals_json():
+    if os.path.exists(HOSPITALS_FILE):
+        with open(HOSPITALS_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return None
+
+def get_hospital_availability(osmid):
+    random.seed(osmid)
+    status = random.choice(["Open", "Open", "Open", "Closed"])
+    capacity = random.randint(20, 100)
+    contact = f"+213 21 {random.randint(10, 99)} {random.randint(10, 99)} {random.randint(10, 99)}"
+    return {"status": status, "capacity": capacity, "contact": contact}

@@ -1,0 +1,19 @@
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment
+.venv/
+venv/
+env/
+.env
+
+# Project Specific
+data/algiers_drive.graphml
+route.html
+output/
+performance_report.md
+.ipynb_checkpoints/
+.DS_Store
