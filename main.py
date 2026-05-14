@@ -23,9 +23,12 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Configuration
 API_KEY = os.environ.get("OPENAI_API_KEY")
-if not API_KEY:
-    print("WARNING: OPENAI_API_KEY not found in environment variables.")
-client = OpenAI(api_key=API_KEY)
+client = None
+
+if API_KEY:
+    client = OpenAI(api_key=API_KEY)
+else:
+    print("\n[!] WARNING: OPENAI_API_KEY not found. AI triage will use local keyword fallback.")
 
 # Global Graph Cache
 print("Initializing Healthcare System...")
@@ -73,6 +76,9 @@ def get_patient_specialty(symptoms):
     specialties_str = ", ".join(specialties_list)
     
     try:
+        if not client:
+            raise ValueError("OpenAI client not initialized (missing API key)")
+            
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -181,4 +187,4 @@ def get_meta():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
